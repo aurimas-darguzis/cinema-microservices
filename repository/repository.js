@@ -8,6 +8,23 @@ const repository = (db) => {
   // in all of our functions.
   const collection = db.collection('movies')
 
+  const getAllMovies = () => {
+    return new Promise((resolve, reject) => {
+      const movies = []
+      const cursor = collection.find({}, {title: 1, id: 1})
+      const addMovie = (movie) => {
+        movies.push(movie)
+      }
+      const sendMovies = (err) => {
+        if (err) {
+          reject(new Error('An error occured fetching all movies, err: ' + err))
+        }
+        resolve(movies.slice())
+      }
+      cursor.forEach(addMovie, sendMovies)
+    })
+  }
+
   const getMoviePremiers = () => {
     return new Promise((resolve, reject) => {
       const movies = []
