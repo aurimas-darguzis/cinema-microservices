@@ -1,11 +1,6 @@
 'use strict'
 
-// factory function, that holds an open connection to the db,
-// and exposes some functions for accessing the data
 const repository = (db) => {
-  // since this is the movies-service, we already know
-  // that we are going to query the `movie` collection
-  // in all of our functions.
   const collection = db.collection('movies')
 
   const getAllMovies = () => {
@@ -17,7 +12,7 @@ const repository = (db) => {
       }
       const sendMovies = (err) => {
         if (err) {
-          reject(new Error('An error occured fetching all movies, err: ' + err))
+          reject(new Error('An error occured fetching all movies, err:' + err))
         }
         resolve(movies.slice())
       }
@@ -48,7 +43,7 @@ const repository = (db) => {
       }
       const sendMovies = (err) => {
         if (err) {
-          reject(new Error('An error occured fetching all movies, err: ' + err))
+          reject(new Error('An error occured fetching all movies, err:' + err))
         }
         resolve(movies)
       }
@@ -65,12 +60,10 @@ const repository = (db) => {
         }
         resolve(movie)
       }
-      // fetch a movie by id -- mongodb syntax
       collection.findOne({id: id}, projection, sendMovie)
     })
   }
 
-  // this will close the database connection
   const disconnect = () => {
     db.close()
   }
@@ -92,5 +85,4 @@ const connect = (connection) => {
   })
 }
 
-// this only exports a connected repo
 module.exports = Object.assign({}, {connect})

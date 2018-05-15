@@ -14,10 +14,10 @@ const start = (options) => {
 
     const app = express()
     app.use(morgan('dev'))
-    app.use(helmet)
-    app.use((err, req, req) => {
-      reject(new Error('Something went wrong!, err: ' + err))
-      res.status(500).send('Something went wrong')
+    app.use(helmet())
+    app.use((err, req, res, next) => {
+      reject(new Error('Something went wrong!, err:' + err))
+      res.status(500).send('Something went wrong!')
     })
 
     api(app, options)
